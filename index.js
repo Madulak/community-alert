@@ -6,11 +6,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Login from './screens/Authentication/login';
 import Signup from './screens/Authentication/signup';
-import Tabscreen from './screens/TabScreens/tabscreen';
-import Notification from './screens/TabScreens/notification';
-import About from './screens/TabScreens/about';
+import Tabscreen from './screens/TabScreens/homeTab';
+import Notification from './screens/TabScreens/notificationTab';
+import About from './screens/TabScreens/aboutTab';
+import addTab from './screens/TabScreens/addTab';
+import MapTab from './screens/TabScreens/mapTab';
 
 import { useSelector } from 'react-redux';
+
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const index = () => {
 
@@ -41,9 +47,26 @@ const index = () => {
           return (
               <NavigationContainer>
                 <Tab.Navigator>
-                  <Tab.Screen name={'home'} component={Tabscreen} />
-                  <Tab.Screen name={'notification'} component={Notification} />
-                  <Tab.Screen name='about' component={About} />
+                  <Tab.Screen options={{tabBarIcon: () => {
+                    return <AntDesign name="home" size={24} color="black" />
+                  }}} name={'home'} component={Tabscreen} />
+
+                  <Tab.Screen options={{tabBarIcon: () => {
+                    return <Ionicons name="ios-notifications-outline" size={24} color="black" />
+                  }}} name={'notification'} component={Notification} />
+
+                  {/* <Tab.Screen options={{tabBarIcon: () => {
+                    return <Feather name="map-pin" size={24} color="black" />
+                  }}} name='Map' component={MapTab} /> */}
+
+                  <Tab.Screen options={{tabBarIcon: () => {
+                    return <Ionicons name="ios-add-circle-outline" size={24} color="black" />
+                  }}} name='add' component={addTab} />
+
+                  <Tab.Screen options={{tabBarIcon: () => {
+                    return <AntDesign name="infocirlceo" size={24} color="black" />
+                  }}} name='about' component={About} />
+
                 </Tab.Navigator>
               </NavigationContainer>
           );

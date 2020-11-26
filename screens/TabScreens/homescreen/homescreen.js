@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import RecentFlatlist from '../../../components/homescreen/recentFlatlist';
+
+// import { AntDesign } from '@expo/vector-icons';
 
 const homescreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
+            {/* <AntDesign style={styles.plusIcon} name="pluscircle" size={48} color="black" /> */}
             <ScrollView showsVerticalScrollIndicator={false}>
+
                 <View style={styles.recentContainer}>
                     <Text style={styles.recentText}>Recent</Text>
                     <TouchableOpacity>
@@ -21,11 +25,14 @@ const homescreen = ({navigation}) => {
                         <Text style={styles.moreText}>More</Text>
                     </TouchableOpacity>
                 </View>
-                <RecentFlatlist />
+                <RecentFlatlist detail={() => navigation.navigate('Category Detail')} />
+                
             </ScrollView>
         </View>
     );
 }
+
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
@@ -47,6 +54,12 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 10,
         padding: 10,
+    },
+    plusIcon: {
+        position: 'absolute',
+        top: height * 0.75,
+        left: width * 0.90,
+        zIndex: 10,
     }
 })
 
