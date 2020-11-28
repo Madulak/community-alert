@@ -3,8 +3,16 @@ import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimension
 import RecentFlatlist from '../../../components/homescreen/recentFlatlist';
 
 // import { AntDesign } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+import * as authActions from '../../../store/actions/auth';
 
 const homescreen = ({navigation}) => {
+
+    const dispatch = useDispatch();
+
+    const logoutHandler = () => {
+        dispatch(authActions.logout())
+    }
 
     return (
         <View style={styles.container}>
@@ -26,6 +34,8 @@ const homescreen = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
                 <RecentFlatlist detail={() => navigation.navigate('Category Detail')} />
+
+                <Button title='log out' onPress={logoutHandler} />
                 
             </ScrollView>
         </View>

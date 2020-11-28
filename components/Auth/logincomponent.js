@@ -2,7 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
+import * as authActions from '../../store/actions/auth';
+import { useDispatch } from 'react-redux';
+
 const logincomponent = ({signup}) => {
+
+    const dispatch = useDispatch();
+
+    const loginHandler = () => {
+        dispatch(authActions.login())
+    }
 
     return (
         <View style={styles.container}>
@@ -15,7 +24,7 @@ const logincomponent = ({signup}) => {
                 <Text style={styles.Textinput}>Password</Text>
                 <TextInput style={styles.input}  />
             </View>
-            <Button title='Login' />
+            <Button title='Login' onPress={loginHandler} />
             <Text style={styles.text_or}>OR</Text>
             <TouchableOpacity style={styles.googleContainer} >
                 <AntDesign style={styles.googleIcon} name="google" size={34} color="blue" />

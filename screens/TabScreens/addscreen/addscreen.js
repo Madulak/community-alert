@@ -1,14 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import Form from '../../../components/addscreen/form';
 
-const addscreen = () => {
+const addscreen = ({navigation}) => {
+
+    const goMap = (location) => {
+        navigation.navigate('map', {
+            location: location
+        })
+    }
 
     return (
         <View style={styles.container}>
-            <Text>ADD MISSING </Text>
-            <Form />
+            <ScrollView>
+                <Text>ADD MISSING </Text>
+                <Form map={goMap} />
+            </ScrollView>
         </View>
     );
 }
