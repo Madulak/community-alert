@@ -4,12 +4,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import Logincomponent from '../../components/Auth/logincomponent';
 
+import { useDispatch } from 'react-redux';
+import * as authActions from '../../store/actions/auth';
+
 const loginscreen = ({navigation}) => {
 
-    const loginRoute = () => {
+    const dispatch = useDispatch();
+
+    const loginRoute = (email, password) => {
         navigation.navigate('signup');
     }
 
+    const loginHandler = (email, password) => {
+        dispatch(authActions.login(email, password))
+    }
 
     return (
         <View onPress={() => Keyboard.dismiss()}  style={styles.container}>
@@ -23,7 +31,7 @@ const loginscreen = ({navigation}) => {
                 <Image source={require('../../assets/images/community.png')} />
             </LinearGradient>
             <View style={styles.loginContainer}>
-                <Logincomponent signup={loginRoute} />
+                <Logincomponent login={loginHandler} signup={loginRoute} />
                 
             </View>
         </View>

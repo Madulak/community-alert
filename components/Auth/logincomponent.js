@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-import * as authActions from '../../store/actions/auth';
-import { useDispatch } from 'react-redux';
+const logincomponent = ({signup, login}) => {
 
-const logincomponent = ({signup}) => {
 
-    const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const loginHandler = () => {
-        dispatch(authActions.login())
+        if(email !== '' && password !== '') {
+            login(email, password);
+            setEmail('');
+            setPassword('');
+        }
     }
 
     return (
@@ -18,11 +21,11 @@ const logincomponent = ({signup}) => {
             <Text style={styles.login__text}>Login</Text>
             <View style={styles.inputBorder}>
                 <Text style={styles.Textinput}>Email</Text>
-                <TextInput style={styles.input}  />
+                <TextInput value={email} onChangeText={e => setEmail(e)} style={styles.input}  />
             </View>
             <View style={styles.inputBorder}>
                 <Text style={styles.Textinput}>Password</Text>
-                <TextInput style={styles.input}  />
+                <TextInput secureTextEntry value={password} onChangeText={e => setPassword(e)} style={styles.input}  />
             </View>
             <Button title='Login' onPress={loginHandler} />
             <Text style={styles.text_or}>OR</Text>

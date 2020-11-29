@@ -7,15 +7,20 @@ import { createStore, combineReducers, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import authReducer from './store/reducer/auth';
+import postsReducer from './store/reducer/posts';
 
 const root = combineReducers({
   user: authReducer,
-})
+  posts: postsReducer
+});
 
 const store = createStore(root, applyMiddleware(ReduxThunk));
 
-export default function App() {
+import { LogBox} from 'react-native';
+LogBox.ignoreWarnings(['Setting a timer']);
 
+const App = () => {
+  
   return (
     <Provider store={store}>
       <StatusBar style="light" />
@@ -24,3 +29,5 @@ export default function App() {
   );
 }
 
+// export  { db, auth, provider, storage } ;
+export default App;

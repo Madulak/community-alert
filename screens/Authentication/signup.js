@@ -4,10 +4,19 @@ import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Signupcomponent from '../../components/Auth/signupcomponent';
 
+import { useDispatch } from 'react-redux';
+import * as authActions from '../../store/actions/auth';
+
 const signup = ({navigation}) => {
+
+    const dispatch = useDispatch();
 
     const loginRoute = () => {
         navigation.navigate('login');
+    }
+
+    const signupHandler = (email, password) => {
+        dispatch(authActions.signup(email, password))
     }
 
     return (
@@ -27,7 +36,7 @@ const signup = ({navigation}) => {
                 <Image source={require('../../assets/images/community.png')} />
             </LinearGradient>
             <View style={styles.signupContainer}>
-                <Signupcomponent login={loginRoute} />
+                <Signupcomponent signup={signupHandler} login={loginRoute} />
             </View>
         </View>
     )

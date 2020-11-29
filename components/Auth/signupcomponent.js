@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-const signupcomponent = ({login}) => {
+const signupcomponent = ({login, signup}) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const signupHandler = () => {
+        // if (email !== '' && password !== '') {
+            signup(email, password);
+            setEmail('');
+            setPassword('');
+        // }
+    }
 
     return (
         <View style={styles.container}>
             <Text style={styles.signup__text}>Sign up</Text>
             <View style={styles.inputBorder}>
                 <Text style={styles.Textinput}>Email</Text>
-                <TextInput style={styles.input}  />
+                <TextInput value={email}  onChangeText={(e) => setEmail(e)} style={styles.input}  />
             </View>
             
             <View style={styles.inputBorder}>
                 <Text style={styles.Textinput}>Password</Text>
-                <TextInput style={styles.input}  />
+                <TextInput secureTextEntry value={password} onChangeText={e => setPassword(e)} style={styles.input}  />
             </View>
 
             <View style={styles.inputBorder}>
                 <Text style={styles.Textinput}>Re-type Password</Text>
                 <TextInput style={styles.input}  />
             </View>
-            <Button title='Sign up' />
+            <Button onPress={signupHandler} title='Sign up' />
             <Text style={styles.text_or}>OR</Text>
             <TouchableOpacity style={styles.googleContainer} >
                 <AntDesign style={styles.googleIcon} name="google" size={34} color="blue" />
