@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, Dimensions, Button } from 'react-native'
 
 import { firebase } from '../../../firebase';
 
-const detail = ({route}) => {
+const detail = ({route, navigation}) => {
 
     console.log(route.params.id)
     const id = route.params.id;
@@ -21,6 +21,12 @@ const detail = ({route}) => {
     
     },[])
 
+    const goMap = () => {
+        navigation.navigate('map', {
+            location: post.location
+        })
+    }
+
     console.log(' [POST] ',post)
 
     return (
@@ -33,7 +39,7 @@ const detail = ({route}) => {
                 <Text>Description {post.description}</Text>
                 <Text>category {post.picker}</Text>
                 {/* <Text>postedBy {post.uploadedBy}</Text> */}
-                <Button title='Map' />
+                <Button title='Map' onPress={goMap} />
             </View>
         </View>
     );

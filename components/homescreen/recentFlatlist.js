@@ -2,12 +2,14 @@ import React from 'react';
 import { Animated, View, StyleSheet, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 
 import { ago } from '../../util';
+import { firebase } from '../../firebase';
 
 const recentFlatlist = ({detail,recentData}) => {
 
     const data = ['1','2','3'];
+    // console.log()
+    console.log('[TIMESTAMP] ', firebase.firestore.Timestamp(1606724727, 109000000))
     
-
     return (
         <View>
             <FlatList showsHorizontalScrollIndicator={false} horizontal keyExtractor={item => item.id} data={recentData} renderItem={(item) => (
@@ -17,7 +19,7 @@ const recentFlatlist = ({detail,recentData}) => {
                     </View>
                     {console.log('[DETAIL ITEM] ',item.item.id)}
                     <Text>{item.item.posts.title}</Text>
-                    <Text>{ago(item.item.posts.timestamp)}</Text>
+                    <Text>{firebase.firestore.Timestamp(item.item.posts.timestamp.seconds, item.item.posts.timestamp.nanoseconds)}</Text>
                     <Text>Johannesburg</Text>
                 </TouchableOpacity>
             )} />

@@ -13,18 +13,23 @@ const homescreen = ({navigation}) => {
     const dispatch = useDispatch();
 
     const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true)
         let unsubscribe;
-        unsubscribe = firebase.firestore().collection('posts').orderBy('timestamp','desc').onSnapshot(snapshot => {
+        unsubscribe = firebase.firestore().collection('posts').onSnapshot(snapshot => {
+            // {console.log('[DATA] ',snapshot)}
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id,
                 posts: doc.data()})))
+               
         })
+        setLoading(false);
         return () => {
             unsubscribe ();
         }
-    },[])
+    },[loading])
 
     const logoutHandler = () => {
         dispatch(authActions.logout())
@@ -35,8 +40,9 @@ const homescreen = ({navigation}) => {
             id: id
         })
     }
-
-    console.log(posts);
+    console.log('[LOADING] ',loading);
+    
+    {posts && console.log(' [Timestamps] ',posts);}
 
     return (
         <View style={styles.container}>
