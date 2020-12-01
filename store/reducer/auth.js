@@ -1,8 +1,9 @@
-import { LOGIN, LOGOUT } from "../actions/auth";
+import { LOGIN, LOGOUT, SIGNUP } from "../actions/auth";
 
 const initialState = {
     user: {palazo: 'palazo'},
     allowed: false,
+    isSignup: false
 }
 
 const Reducer = (state = initialState, action) => {
@@ -16,7 +17,12 @@ const Reducer = (state = initialState, action) => {
         case LOGIN:
             return {
                 ...state,
-                user: {palazo: 'palazo'},
+                user: action.email,
+            }
+        case SIGNUP:
+            return {
+                ...state,
+                isSignup: true
             }
 
         default:

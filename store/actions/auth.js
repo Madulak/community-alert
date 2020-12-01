@@ -6,22 +6,24 @@ export const SIGNUP = 'SIGNUP';
 
 export const signup = (email, password) => {
     return async dispatch => {
+        
         try {
-            // const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
-            // console.log(user.additionalUserInfo.isNewUser);
-            // const isNewUser = user.additionalUserInfo.isNewUser;
-            // if (isNewUser) {
+            const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            console.log(user.user.email);
+            
+            const isNewUser = user.additionalUserInfo.isNewUser;
+            if (isNewUser) {
                 await firebase.firestore().collection('users').add({
-                    email: 'email timestamp',
+                    email: email,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 })
-            // }
+            }
         } catch (error) {
             console.log(error)
             throw error;
         }
 
-        dispatch({type: SIGNUP})
+        dispatch({type: SIGNUP,  })
     }
 }
 
@@ -34,15 +36,16 @@ export const logout = () => {
 
 export const login = (email, password) => {
     return async dispatch => {
-
+        let usermail;
         try {
             const user = await firebase.auth().signInWithEmailAndPassword(email, password)
             console.log(user);
+            usermail = user.user.email;
         } catch (error) {
             console.log(error);
             throw error;
         }
 
-        dispatch({type: LOGIN})
+        dispatch({type: LOGIN, email: usermail})
     }
 }

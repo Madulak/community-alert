@@ -16,9 +16,6 @@ const root = combineReducers({
 
 const store = createStore(root, applyMiddleware(ReduxThunk));
 
-import { LogBox} from 'react-native';
-LogBox.ignoreWarnings(['Setting a timer']);
-
 const App = () => {
   
   return (

@@ -8,11 +8,11 @@ const signupcomponent = ({login, signup}) => {
     const [password, setPassword] = useState('');
 
     const signupHandler = () => {
-        // if (email !== '' && password !== '') {
+        if (email !== '' && password !== '') {
             signup(email, password);
             setEmail('');
             setPassword('');
-        // }
+        }
     }
 
     return (

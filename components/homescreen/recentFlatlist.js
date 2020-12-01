@@ -1,19 +1,23 @@
 import React from 'react';
-import { Animated, View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import { Animated, View, StyleSheet, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 
-const recentFlatlist = ({detail}) => {
+import { ago } from '../../util';
 
-    const data = [1,2,3];
+const recentFlatlist = ({detail,recentData}) => {
+
+    const data = ['1','2','3'];
+    
 
     return (
         <View>
-            <FlatList showsHorizontalScrollIndicator={false} horizontal keyExtractor={item => item} data={data} renderItem={(item) => (
-                <TouchableOpacity onPress={detail} style={styles.cardContainer}>
+            <FlatList showsHorizontalScrollIndicator={false} horizontal keyExtractor={item => item.id} data={recentData} renderItem={(item) => (
+                <TouchableOpacity onPress={() => detail(item.item.id)} style={styles.cardContainer}>
                     <View style={styles.imageContainer}>
-
+                        {/* <Image style={styles.Image} resizeMode='cover' source={{uri: item.item.posts.image}} /> */}
                     </View>
-                    <Text>Stolen Car</Text>
-                    <Text>3 Hrs ago</Text>
+                    {console.log('[DETAIL ITEM] ',item.item.id)}
+                    <Text>{item.item.posts.title}</Text>
+                    <Text>{ago(item.item.posts.timestamp)}</Text>
                     <Text>Johannesburg</Text>
                 </TouchableOpacity>
             )} />
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
     cardContainer: {
         margin: 10,
         borderRadius: 10,
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
     },
@@ -38,6 +42,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'lime',
         overflow: 'hidden'
         
+    },
+    Image: {
+        flex:1,
     }
 })
 

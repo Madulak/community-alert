@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 import Form from '../../../components/addscreen/form';
 
+import { useDispatch } from 'react-redux';
+import * as postActions from '../../../store/actions/posts';
+
 const addscreen = ({navigation}) => {
+
+    const dispatch = useDispatch();
 
     const goMap = (location) => {
         navigation.navigate('map', {
@@ -11,11 +16,15 @@ const addscreen = ({navigation}) => {
         })
     }
 
+    const uploadHandler = (data) => {
+        dispatch(postActions.create_post(data))
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView>
                 <Text>ADD MISSING </Text>
-                <Form map={goMap} />
+                <Form upload={uploadHandler} map={goMap} />
             </ScrollView>
         </View>
     );
