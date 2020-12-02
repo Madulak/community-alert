@@ -55,9 +55,9 @@ const index = () => {
                     return <Ionicons name="ios-notifications-outline" size={24} color="black" />
                   }}} name={'notification'} component={Notification} />
 
-                  {/* <Tab.Screen options={{tabBarIcon: () => {
+                  <Tab.Screen options={{tabBarIcon: () => {
                     return <Feather name="map-pin" size={24} color="black" />
-                  }}} name='Map' component={MapTab} /> */}
+                  }}} name='Map' component={MapTab} />
 
                   <Tab.Screen options={{tabBarIcon: () => {
                     return <Ionicons name="ios-add-circle-outline" size={24} color="black" />

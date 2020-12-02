@@ -23,7 +23,6 @@ const addscreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <Text>ADD MISSING </Text>
                 <Form upload={uploadHandler} map={goMap} />
             </ScrollView>
         </View>

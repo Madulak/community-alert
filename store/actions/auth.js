@@ -3,6 +3,7 @@ import { firebase } from '../../firebase';
 export const LOGOUT = 'LOGOUT';
 export const LOGIN = 'LOGIN';
 export const SIGNUP = 'SIGNUP';
+export const LOADING = 'LOADING';
 
 export const signup = (email, password) => {
     return async dispatch => {
@@ -38,9 +39,11 @@ export const login = (email, password) => {
     return async dispatch => {
         let usermail;
         try {
+            dispatch({type: LOADING, loading: true})
             const user = await firebase.auth().signInWithEmailAndPassword(email, password)
             console.log(user);
             usermail = user.user.email;
+            dispatch({type: LOADING, loading: false})
         } catch (error) {
             console.log(error);
             throw error;

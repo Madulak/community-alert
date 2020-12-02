@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { Alert, View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import RecentFlatlist from '../../../components/homescreen/recentFlatlist';
 
 // import { AntDesign } from '@expo/vector-icons';
@@ -31,18 +31,14 @@ const homescreen = ({navigation}) => {
         }
     },[loading])
 
-    const logoutHandler = () => {
-        dispatch(authActions.logout())
-    }
-
     const goDetail = (id) => {
         navigation.navigate('detail', {
             id: id
         })
     }
-    console.log('[LOADING] ',loading);
+    // console.log('[LOADING] ',loading);
     
-    {posts && console.log(' [Timestamps] ',posts);}
+    // {posts && console.log(' [Timestamps] ',posts);}
 
     return (
         <View style={styles.container}>
@@ -57,7 +53,7 @@ const homescreen = ({navigation}) => {
                 </View>
                 <RecentFlatlist recentData={posts} detail={goDetail}  />
 
-                <View style={styles.recentContainer}>
+                {/* <View style={styles.recentContainer}>
                     <Text style={styles.recentText}>Categories</Text>
                     <TouchableOpacity>
                         <Text style={styles.moreText}>More</Text>
@@ -65,7 +61,7 @@ const homescreen = ({navigation}) => {
                 </View>
                 <RecentFlatlist detail={() => navigation.navigate('detail')} />
 
-                <Button title='log out' onPress={logoutHandler} />
+                <Button color='red' title='log out' onPress={logoutHandler} /> */}
                 
             </ScrollView>
         </View>
@@ -100,6 +96,9 @@ const styles = StyleSheet.create({
         top: height * 0.75,
         left: width * 0.90,
         zIndex: 10,
+    },
+    Button: {
+        backgroundColor: 'red',
     }
 })
 

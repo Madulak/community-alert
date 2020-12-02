@@ -125,11 +125,11 @@ const form = ({map, upload}) => {
                     {image ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: image}} /> : <Text>No Image Selected</Text> }
                 </View>
                 <View style={styles.mapButtons}>
-                    <Button onPress={getLocation} title='Get Current location' />
-                    <Button onPress={() => map(location)} title='Get on Map' />
-                    <Button onPress={pickImage} title='Pic image' />
+                    <View style={styles.getButtons}><Button color='blue' onPress={getLocation} title='Get Current location' /></View>
+                    <View style={styles.getButtons}><Button onPress={() => map(location)} title='Get on Map' /></View>
+                    <View style={styles.getButtons}><Button onPress={pickImage} title='Pic image' /></View>
                 </View>
-                <Button title="Show Date Picker" onPress={showDatePicker} />
+                <View style={styles.getButtons}><Button style={styles.Button} title="Show Date Picker" onPress={showDatePicker} /></View>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="datetime"
@@ -171,31 +171,38 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        borderColor: 'red',
     },
     mapButtons: {
         width: '100%',
         justifyContent: 'space-around',
         flexDirection: 'row',
     },
+    getButtons: {
+      marginVertical: 10,
+      backgroundColor: 'red',
+      color: 'red',
+    },
     inputBorder: {
       marginVertical: 5,
-  },
-  Textinput: {
-      position: 'absolute',
-      backgroundColor: 'white',
-      padding: 5,
-      top: -10,
-      zIndex: 10,
-      left: 20,
-      fontSize: 15,
-  },
-  input: {
-      borderWidth: 1,
-      borderColor: 'lightgrey',
-      borderRadius: 5,
-      margin: 5,
-      padding: 5,
-  },
+    },
+    Textinput: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        padding: 5,
+        top: -10,
+        zIndex: 10,
+        left: 20,
+        fontSize: 15,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        borderRadius: 5,
+        margin: 5,
+        padding: 5,
+    },
+    
 })
 
 export default form;

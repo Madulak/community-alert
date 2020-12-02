@@ -15,7 +15,7 @@ const recentFlatlist = ({detail,recentData}) => {
             <FlatList showsHorizontalScrollIndicator={false} horizontal keyExtractor={item => item.id} data={recentData} renderItem={(item) => (
                 <TouchableOpacity onPress={() => detail(item.item.id)} style={styles.cardContainer}>
                     <View style={styles.imageContainer}>
-                        {/* <Image style={styles.Image} resizeMode='cover' source={{uri: item.item.posts.image}} /> */}
+                        <Image style={styles.Image} resizeMode='cover' source={{uri: item.item.posts.image}} />
                     </View>
                     {console.log('[DETAIL ITEM] ',item.item.id)}
                     <Text>{item.item.posts.title}</Text>
@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
         // backgroundColor: 'yellow',
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
+        padding: 10,
+        backgroundColor: 'lightblue'
     },
     imageContainer: {
         width: 200,

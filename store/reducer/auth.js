@@ -1,9 +1,10 @@
-import { LOGIN, LOGOUT, SIGNUP } from "../actions/auth";
+import { LOADING, LOGIN, LOGOUT, SIGNUP } from "../actions/auth";
 
 const initialState = {
     user: {palazo: 'palazo'},
     allowed: false,
-    isSignup: false
+    isSignup: false,
+    loading: false
 }
 
 const Reducer = (state = initialState, action) => {
@@ -23,6 +24,11 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isSignup: true
+            }
+        case LOADING:
+            return {
+                ...state,
+                loading: action.loading,
             }
 
         default:

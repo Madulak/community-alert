@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const about = () => {
+import Aboutscreen from './aboutscreen/aboutscreen';
+
+const aboutTab = () => {
+
+    const Stack = createStackNavigator();
 
     return (
-        <View>
-            <Text>About</Text>
-        </View>
+        <Stack.Navigator screenOptions={{headerStyle: { backgroundColor: '#192f6a',}, headerTintColor: 'white'}}>
+            <Stack.Screen name='About' component={Aboutscreen} />
+        </Stack.Navigator>
     );
 }
 
-export default about;
+export default aboutTab;
