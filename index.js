@@ -57,7 +57,7 @@ const index = () => {
 
                   <Tab.Screen options={{tabBarIcon: () => {
                     return <Feather name="map-pin" size={24} color="black" />
-                  }}} name='Map' component={MapTab} />
+                  }, tabBarVisible: false}} name='Map' component={MapTab} />
 
                   <Tab.Screen options={{tabBarIcon: () => {
                     return <Ionicons name="ios-add-circle-outline" size={24} color="black" />

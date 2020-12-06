@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Button } from 'react-native';
 
+import ModalDetail from '../../../components/modalDetail/modalDetail';
+import Comments from '../../../components/comments/comments';
 import { firebase } from '../../../firebase';
 
 const detail = ({route, navigation}) => {
@@ -8,6 +10,7 @@ const detail = ({route, navigation}) => {
     console.log(route.params.id)
     const id = route.params.id;
     const [post, setPost] = useState({})
+    const [modal, setModal] = useState(false);
 
     useEffect(() => {
         let unsubscribe;
@@ -22,9 +25,15 @@ const detail = ({route, navigation}) => {
     },[])
 
     const goMap = () => {
+        
         navigation.navigate('map', {
             location: post.location
         })
+        setModal(false)
+    }
+
+    const modalHandler = () => {
+        setModal(state => !state);
     }
 
     console.log(' [POST] ',post)
@@ -34,13 +43,10 @@ const detail = ({route, navigation}) => {
             <View style={styles.imageContainer}>
                 <Image resizeMode='cover' style={styles.image} source={{uri: post.image}} />
             </View>
-            <View>
-                <Text>Title {post.title}</Text>
-                <Text>Description {post.description}</Text>
-                <Text>category {post.picker}</Text>
-                {/* <Text>postedBy {post.uploadedBy}</Text> */}
-                <Button title='Map' onPress={goMap} />
-            </View>
+            
+            <Button onPress={modalHandler} title='All Details' />
+            <ModalDetail goMap={goMap} title={post.title} description={post.description} picker={post.picker} uploadedBy={post.uploadedBy} modal={modal} modalHandler={modalHandler} />
+            <Comments />
         </View>
     );
 }
@@ -54,12 +60,13 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         height: height * 0.40,
-        width: width
+        width: width,
+        padding: 10,
     },
     image: {
         flex: 1,
-    }
-
+    },
+    
 })
 
 export default detail;
