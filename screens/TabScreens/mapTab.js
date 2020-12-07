@@ -9,7 +9,7 @@ const mapTab = () => {
 
     return (
         <Stack.Navigator screenOptions={{headerStyle: { backgroundColor: '#192f6a',}, headerTintColor: 'white'}}>
-            <Stack.Screen name='Map' component={Mapscreen} />
+            <Stack.Screen name='Map' options={{headerShown: false}} component={Mapscreen} />
         </Stack.Navigator>
     );
 }

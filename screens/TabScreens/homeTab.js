@@ -35,7 +35,7 @@ const tabscreen = ({navigation}) => {
 
     return (
         <Stack.Navigator screenOptions={{headerStyle: { backgroundColor: '#192f6a',}, headerTintColor: 'white'}}>
-            <Stack.Screen name='homescreen' component={Homescreen}  options={{
+            <Stack.Screen name='Community alert' component={Homescreen}  options={{
                 // headerTitle: props => <LogoTitle {...props} />,
                 headerRight: () => (
                     <TouchableOpacity onPress={logoutHandler}>

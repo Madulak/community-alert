@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, Button } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { StatusBar } from 'expo-status-bar';
 import { FlatList } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase';
 
+import MarkerComponent from '../../../components/markerComponent/markerComponent';
+
 const map = () => {
 
+    const [show, setShow] = useState(false);
     const [posts, setPosts] = useState([])
     const [mapcoord, setMapcoord] = useState({
         latitude: 37.78825,
@@ -29,31 +32,36 @@ const map = () => {
         return () => {
             unsubscribe ();
         }
-    },[mapcoord])
+    },[mapcoord, marker, show])
 
     const markerSet = (lat, lng) => {
+        console.log('[LAT AND LONG] ', lat, lng)
         setMapcoord({
             latitude: lat,
             longitude: lng,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
         })
-        // setMarker({
-        //     latitude: lat,
-        //     longitude: lng
-        // }) 
+        setMarker({
+            latitude: lat,
+            longitude: lng
+        }) 
     }
 
-    console.log('[MAP POST] ', posts)
+    // console.log('[MAP POST] ', posts)
 
     return (
         <View>
             {/* <StatusBar style='light' /> */}
             <MapView style={styles.mapStyle} 
                 region={mapcoord? mapcoord : null}
+                onPress={() => setShow(false)}
+                
             >
                 
-                    {/* <>{marker && <Marker coordinate={{latitude: marker.latitude, longitude: marker.longitude}} />} </> */}
+                    {marker.latitude ? <Marker onPress={() => setShow(true)} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} >
+                        {show && <MarkerComponent show={() => setShow(false)} />}
+                    </Marker>: null } 
                 
             </MapView>
             <View style={styles.flatlistContainer}>
@@ -64,11 +72,10 @@ const map = () => {
                     keyExtractor={item => item.id}
                     renderItem={(item => (
                         
-                        <View onPress={() => markerSet(item.item.posts.location.lat, item.item.posts.location.lng)} style={{width: 150, height: 150, backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 10,}}>
-                            <Text>{item.item.posts.picker}</Text>
+                        <TouchableOpacity  onPress={() => markerSet(item.item.posts.location.lat, item.item.posts.location.lng)} style={{width: 150, height: 150, backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 10,}}>
+                            <Text  style={styles.fontText}>{item.item.posts.picker}</Text>
                             <Image source={{uri: item.item.posts.image}} style={{width: '100%', height: '70%',}} />
-                            {console.log(item)}
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 />
             </View>
@@ -87,12 +94,17 @@ const styles = StyleSheet.create({
     },
     flatlistContainer: {
         position:'absolute',
-        bottom: Dimensions.get('window').height * 0.05,
-        height: Dimensions.get('screen').height * 0.25,
+        bottom: Dimensions.get('window').height * 0.01,
+        // height: Dimensions.get('screen').height * 0.25,
         width: Dimensions.get('window').width,
         backgroundColor: 'white',
         zIndex: 10,
         backgroundColor: 'transparent',
+    },
+    fontText: {
+        fontSize: 15,
+        padding: 5,
+        
     }
 })
 
