@@ -3,6 +3,7 @@ import React, { Fragment, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Login from './screens/Authentication/login';
 import Signup from './screens/Authentication/signup';
@@ -46,26 +47,44 @@ const index = () => {
         const FullApp = () => {
           return (
               <NavigationContainer>
-                <Tab.Navigator>
-                  <Tab.Screen options={{tabBarIcon: () => {
-                    return <AntDesign name="home" size={24} color="black" />
+                <Tab.Navigator   
+                    tabBarOptions={{ labelStyle: {fontSize: 12},
+                      activeTintColor: '#fff',
+                      inactiveTintColor: 'lightgray',
+                      activeBackgroundColor: '#192f6a',
+                      inactiveBackgroundColor: 'white',
+                          style: {
+                                backgroundColor: 'red',
+                                
+                          }
+                   }}
+                    >
+
+                  <Tab.Screen options={{tabBarIcon: ({focused, color}) => {
+                    color = focused ? 'white' : '#192f6a';
+                    return <AntDesign name="home" size={30} color={color} />
                   }}} name={'home'} component={Tabscreen} />
 
-                  <Tab.Screen options={{tabBarIcon: () => {
-                    return <Ionicons name="ios-notifications-outline" size={24} color="black" />
-                  }}} name={'notification'} component={Notification} />
+                  <Tab.Screen options={{tabBarIcon: ({focused, color}) => {
+                    let iconColor;
+                    color = focused ? 'white' : '#192f6a';
+                    return <Ionicons name="ios-notifications-outline" size={30} color={color} />
+                  }, tabBarBadge: 0}} name={'notification'} component={Notification} />
 
-                  <Tab.Screen options={{tabBarIcon: () => {
-                    return <Feather name="map-pin" size={24} color="black" />
+                  <Tab.Screen options={{tabBarIcon: (focused) => {
+                    
+                    return <Feather name="map-pin" size={30} color={'#192f6a'} />
                   }, tabBarVisible: false}} name='Map' component={MapTab} />
 
-                  <Tab.Screen options={{tabBarIcon: () => {
-                    return <Ionicons name="ios-add-circle-outline" size={24} color="black" />
+                  <Tab.Screen options={{tabBarIcon: ({focused, color}) => {
+                    color = focused ? 'white' : '#192f6a';
+                    return <Ionicons name="ios-add-circle-outline" size={30} color={color} />
                   }}} name='add' component={addTab} />
 
-                  <Tab.Screen options={{tabBarIcon: () => {
-                    return <AntDesign name="infocirlceo" size={24} color="black" />
-                  }}} name='about' component={About} />
+                  <Tab.Screen options={{tabBarIcon: ({focused, color}) => {
+                    color = focused ? 'white' : '#192f6a';
+                    return <AntDesign name="infocirlceo" size={30} color={color} />
+                  }}} name='profile' component={About} />
 
                 </Tab.Navigator>
               </NavigationContainer>

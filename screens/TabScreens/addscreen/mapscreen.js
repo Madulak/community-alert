@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
@@ -14,6 +14,10 @@ const mapscreen = ({route}) => {
             lng: e.nativeEvent.coordinate.longitude
         })
     }
+
+    useEffect(() => {
+
+    },[mapcord])
 
     return (
         <View style={styles.container}>

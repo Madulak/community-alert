@@ -100,7 +100,6 @@ const form = ({map, upload}) => {
     return (
         <View onPress={Keyboard.dismiss} style={styles.container}>
             <ScrollView>
-                <Text>Form</Text>
                 {/* <Input maxLength={20}  name='Title' /> */}
                 <View style={styles.inputBorder}>
                     <Text style={styles.Textinput}>{'Title'}</Text>
@@ -125,11 +124,11 @@ const form = ({map, upload}) => {
                     {image ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: image}} /> : <Text>No Image Selected</Text> }
                 </View>
                 <View style={styles.mapButtons}>
-                    <View style={styles.getButtons}><Button color='blue' onPress={getLocation} title='Get Current location' /></View>
-                    <View style={styles.getButtons}><Button onPress={() => map(location)} title='Get on Map' /></View>
-                    <View style={styles.getButtons}><Button onPress={pickImage} title='Pic image' /></View>
+                    <View style={styles.getButtons}><Button color='#192f6a' onPress={getLocation} title='Get Current location' /></View>
+                    <View style={styles.getButtons}><Button color='#192f6a' onPress={() => map(location)} title='Get on Map' /></View>
+                    <View style={styles.getButtons}><Button color='#192f6a' onPress={pickImage} title='Pic image' /></View>
                 </View>
-                <View style={styles.getButtons}><Button style={styles.Button} title="Show Date Picker" onPress={showDatePicker} /></View>
+                <View style={styles.getButtons}><Button color='#192f6a' style={styles.Button} title="Show Date Picker" onPress={showDatePicker} /></View>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="datetime"
@@ -149,7 +148,7 @@ const form = ({map, upload}) => {
                     <Picker.Item label="Business Items" value="business items" />
                 </Picker>
                 {/* {location && <Text>{location}</Text>} */}
-                <Button onPress={uploadHandler} title='submit' />
+                <Button onPress={uploadHandler} color='green' title='submit' />
             </ScrollView>
         </View>
     );
@@ -159,7 +158,8 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-      paddingHorizontal: width * 0.05
+      paddingHorizontal: width * 0.05,
+      paddingVertical: height * 0.02
     },
     imagePic: {
       width: '100%',
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
     mapPic: {
         margin: 'auto',
         height: 150,
-        borderWidth: 1,
+        borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: 'red',
+        borderColor: '#192f6a',
     },
     mapButtons: {
         width: '100%',
@@ -194,10 +194,11 @@ const styles = StyleSheet.create({
         zIndex: 10,
         left: 20,
         fontSize: 15,
+        color: '#192f6a'
     },
     input: {
         borderWidth: 1,
-        borderColor: 'lightgrey',
+        borderColor: '#192f6a',
         borderRadius: 5,
         margin: 5,
         padding: 5,

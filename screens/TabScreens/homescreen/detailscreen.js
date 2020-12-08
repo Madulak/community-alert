@@ -45,7 +45,7 @@ const detail = ({route, navigation}) => {
             </View>
             
             <Button onPress={modalHandler} title='All Details' />
-            <ModalDetail goMap={goMap} title={post.title} description={post.description} picker={post.picker} uploadedBy={post.uploadedBy} modal={modal} modalHandler={modalHandler} />
+            <ModalDetail goMap={goMap} id={id} uploadedBy={post.uploadedBy} modal={modal} modalHandler={modalHandler} />
             <Comments />
         </View>
     );

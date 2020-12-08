@@ -1,6 +1,7 @@
 import { firebase } from '../../firebase';
 
 export const CREATE_POST = 'CREATE_POST';
+export const SELECT_LOCATION = 'SELECT_LOCATION';
 
 export const create_post = (data) => {
 
@@ -53,5 +54,13 @@ export const create_post = (data) => {
 
 
         dispatch({  type: CREATE_POST })
+    }
+}
+
+export const select_location = (data) => {
+
+    return dispatch => {
+
+        dispatch({type: SELECT_LOCATION, location: data})
     }
 }
