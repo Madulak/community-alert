@@ -1,7 +1,7 @@
 import { LOADING, LOGIN, LOGOUT, SIGNUP } from "../actions/auth";
 
 const initialState = {
-    user: {palazo: 'palazo'},
+    user: {username: 'palazo'},
     allowed: false,
     isSignup: false,
     loading: false

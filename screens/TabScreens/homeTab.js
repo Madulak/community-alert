@@ -6,6 +6,7 @@ import Homescreen from './homescreen/homescreen';
 import Detail from './homescreen/detailscreen';
 import CategoryDetail from './homescreen/categoryDetail';
 import Mapscreen from './homescreen/mapscreen';
+import recentList from './homescreen/recentList';
 
 import { AntDesign } from '@expo/vector-icons';
 
@@ -46,6 +47,7 @@ const tabscreen = ({navigation}) => {
             <Stack.Screen name='detail' component={Detail} />
             <Stack.Screen name='Category Detail' component={CategoryDetail} />
             <Stack.Screen name='map' component={Mapscreen} />
+            <Stack.Screen name='Stolen Items' component={recentList} />
         </Stack.Navigator>
     );
 

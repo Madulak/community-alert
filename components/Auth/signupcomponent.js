@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
+
 const signupcomponent = ({login, signup}) => {
 
     const [email, setEmail] = useState('');
@@ -32,7 +33,7 @@ const signupcomponent = ({login, signup}) => {
                 <Text style={styles.Textinput}>Re-type Password</Text>
                 <TextInput style={styles.input}  />
             </View>
-            <Button onPress={signupHandler} title='Sign up' />
+            <Button onPress={signupHandler} color='#192f6a' title='Sign up' />
             <Text style={styles.text_or}>OR</Text>
             <TouchableOpacity style={styles.googleContainer} >
                 <AntDesign style={styles.googleIcon} name="google" size={34} color="blue" />
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     },
     signup__text: {
         fontSize: 20,
-        color: 'black',
+        color: '#192f6a',
         margin: 5,
         
     },
@@ -72,10 +73,12 @@ const styles = StyleSheet.create({
         zIndex: 10,
         left: 20,
         fontSize: 15,
+        color: '#192f6a',
+        fontSize: 16
     },
     input: {
-        borderWidth: 1,
-        borderColor: 'lightgrey',
+        borderWidth: 2,
+        borderColor: '#192f6a',
         borderRadius: 5,
         margin: 5,
         padding: 5,

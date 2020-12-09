@@ -2,6 +2,7 @@ import { firebase } from '../../firebase';
 
 export const CREATE_POST = 'CREATE_POST';
 export const SELECT_LOCATION = 'SELECT_LOCATION';
+export const CREATE_COMMENT = 'CREATE_COMMENT';
 
 export const create_post = (data) => {
 
@@ -62,5 +63,22 @@ export const select_location = (data) => {
     return dispatch => {
 
         dispatch({type: SELECT_LOCATION, location: data})
+    }
+}
+
+export const create_comment = (data) => {
+
+    return async (dispatch, getState) => {
+        const user = getState().user.user.username;
+        const id = data.id;
+        const comment = data.comment;
+
+        firebase.firestore().collection('posts').doc(id).collection('comments').add({
+            comment: comment,
+            commentBy: user,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+
+        dispatch({ type: CREATE_COMMENT })
     }
 }

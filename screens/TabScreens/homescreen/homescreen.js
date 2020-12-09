@@ -36,6 +36,10 @@ const homescreen = ({navigation}) => {
             id: id
         })
     }
+
+    const goMore = () => {
+        navigation.navigate('Stolen Items')
+    }
     // console.log('[LOADING] ',loading);
     
     // {posts && console.log(' [Timestamps] ',posts);}
@@ -47,7 +51,7 @@ const homescreen = ({navigation}) => {
 
                 <View style={styles.recentContainer}>
                     <Text style={styles.recentText}>Recent</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={goMore}>
                         <Text style={styles.moreText}>More</Text>
                     </TouchableOpacity>
                 </View>

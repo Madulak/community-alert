@@ -6,6 +6,7 @@ import Logincomponent from '../../components/Auth/logincomponent';
 
 import { useDispatch } from 'react-redux';
 import * as authActions from '../../store/actions/auth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const loginscreen = ({navigation}) => {
 
@@ -20,7 +21,7 @@ const loginscreen = ({navigation}) => {
     }
 
     return (
-        <View onPress={() => Keyboard.dismiss()}  style={styles.container}>
+        <KeyboardAwareScrollView onPress={() => Keyboard.dismiss()}  style={styles.container}>
             <LinearGradient
                  onPress={() => Keyboard.dismiss()} 
                 // Button Linear Gradient
@@ -34,7 +35,7 @@ const loginscreen = ({navigation}) => {
                 <Logincomponent login={loginHandler} signup={loginRoute} />
                 
             </View>
-        </View>
+        </KeyboardAwareScrollView>
     );
 }
 

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, Button, TextInput, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Modal, Button, TextInput, Image, Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../../firebase';
 
-const modalDetail = ({modal, modalHandler, id, title, description, picker, uploadedBy, goMap}) => {
+
+
+const modalDetail = ({modal, modalHandler, id, title, description, picker, uploadedBy, goMap, commentHandler}) => {
 
     const [comment, setComment] = useState('');
     const [post, setPost] = useState({})
@@ -23,31 +26,49 @@ const modalDetail = ({modal, modalHandler, id, title, description, picker, uploa
     
     },[])
 
+    const addComment = () => {
+        const data = {
+            id: id,
+            comment: comment
+        }
+        commentHandler(data);
+        setComment('');
+    }
+
     return (
+        
         <Modal 
             animationType="slide"
             transparent={false}
             visible={modal}
             onRequestClose={() => modalHandler()}
         >   
-            <View style={styles.imageContainer}>
-                <Image resizeMode='cover' style={styles.image} source={{uri: post.image}} />
-            </View>
-            <View>
-                <Text style={styles.title}>Title: <Text style={styles.textInside}>{post.title}</Text></Text>
-                <Text style={styles.title}>Description: <Text style={styles.textInside}>{post.description} In incididunt ea mollit occaecat est cupidatat consectetur sunt.</Text></Text>
-                <Text style={styles.title}>category: <Text style={styles.textInside}>{post.picker}</Text></Text>
+        <KeyboardAwareScrollView>
+                <View style={styles.imageContainer}>
+                    <Image resizeMode='cover' style={styles.image} source={{uri: post.image}} />
+                </View>
+                <View>
+                    <Text style={styles.title}>Title: <Text style={styles.textInside}>{post.title}</Text></Text>
+                    <Text style={styles.title}>Description: <Text style={styles.textInside}>{post.description} In incididunt ea mollit occaecat est cupidatat consectetur sunt.</Text></Text>
+                    <Text style={styles.title}>category: <Text style={styles.textInside}>{post.picker}</Text></Text>
+                    
+                </View>
+                <View style={styles.commentContainer}>
+                    <View style={styles.inputBorder}>
+                        <Text style={styles.Textinput}>{'Comment'}</Text>
+                        <TextInput value={comment} onChangeText={e => setComment(e)} maxLength={30} style={styles.input} />
+                    </View>
+                    <View>
+                        <Button onPress={addComment} title='Send' />
+                    </View>
+                </View>
                 
-            </View>
-            
-            <View style={styles.inputBorder}>
-                    <Text style={styles.Textinput}>{'Comment'}</Text>
-                    <TextInput value={comment} onChangeText={e => setComment(e)} maxLength={30} style={styles.input} />
-            </View>
-            <View style={styles.buttons}>
-                <Button title='See on Map' onPress={goMap} />
-                <Button onPress={modalfunction} title='Back' />
-            </View>
+                <View style={styles.buttons}>
+                    <Button color='#192f6a' title='See on Map' onPress={goMap} />
+                    <Button color='#192f6a' onPress={modalfunction} title='Back' />
+                </View>
+           
+                </KeyboardAwareScrollView>
         </Modal>
     );
 }
@@ -56,7 +77,7 @@ const { width, height } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container: {
-
+        flex: 1,
     },
     image: {
         flex: 1,
@@ -89,6 +110,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         margin: 5,
         padding: 5,
+        width: width * 0.80,
+        height: height * 0.10,
     },
     imageContainer: {
         height: height * 0.40,
@@ -106,6 +129,11 @@ const styles = StyleSheet.create({
     textInside: {
         fontSize: 20,
         color: 'black',
+    },
+    commentContainer: {
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        alignItems: 'flex-end',
     }
 
 })

@@ -6,8 +6,13 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Picker } from '@react-native-picker/picker';
 
 import Input from '../UI/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import * as locationActions from '../../store/actions/posts';
 
 const form = ({map, upload}) => {
+
+    const dispatch = useDispatch();
+    const locationState = useSelector(state => state.posts.location);
 
     const [image, setImage] = useState(null);
     const [location, setLocation] = useState({});
@@ -17,7 +22,7 @@ const form = ({map, upload}) => {
     const [description, setDescription] = useState(''); 
     const [timeDate, setTimeDate] = useState(null);
 
-    const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${location.lng},${location.lat},14.25,0,60/600x600?access_token=pk.eyJ1IjoicGFsYXpvIiwiYSI6ImNraHJ2bTF6MTBlOXQyeGxoamJtZHY5bzIifQ.JbJRVoUD3o1YKFciSPwp2g`
+    const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${locationState.lng},${locationState.lat},14.25,0,60/600x600?access_token=pk.eyJ1IjoicGFsYXpvIiwiYSI6ImNraHJ2bTF6MTBlOXQyeGxoamJtZHY5bzIifQ.JbJRVoUD3o1YKFciSPwp2g`
 
     useEffect(() => {
       (async () => {
@@ -34,7 +39,7 @@ const form = ({map, upload}) => {
         }
 
       })();
-    }, [location, image]);
+    }, []);
   
     const pickImage = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -52,10 +57,15 @@ const form = ({map, upload}) => {
 
     const getLocation = async () => {
         let location = await Location.getCurrentPositionAsync({});
+        
         setLocation({
           lat: location.coords.latitude,
           lng: location.coords.longitude,
         });
+        dispatch(locationActions.select_location({
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+        }))
     }
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -74,12 +84,14 @@ const form = ({map, upload}) => {
       hideDatePicker();
     };
 
-    console.log(title);
-    console.log(description);
-    console.log(picker);
-    console.log(timeDate);
-    console.log(image)
-    console.log(location);
+    // console.log(title);
+    // console.log(description);
+    // console.log(picker);
+    // console.log(timeDate);
+    // console.log(image)
+    // console.log(location);
+
+    console.log('[LOCATION FROM THE STATE] ', locationState)
 
     const uploadHandler = () => {
       const data = {
@@ -124,11 +136,11 @@ const form = ({map, upload}) => {
                     {image ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: image}} /> : <Text>No Image Selected</Text> }
                 </View>
                 <View style={styles.mapButtons}>
-                    <View style={styles.getButtons}><Button color='#192f6a' onPress={getLocation} title='Get Current location' /></View>
+                    <View style={styles.getButtons}><Button color='#192f6a' onPress={getLocation} title='Current location' /></View>
                     <View style={styles.getButtons}><Button color='#192f6a' onPress={() => map(location)} title='Get on Map' /></View>
-                    <View style={styles.getButtons}><Button color='#192f6a' onPress={pickImage} title='Pic image' /></View>
+                    <View style={styles.getButtons}><Button color='#192f6a' onPress={pickImage} title='Pick image' /></View>
                 </View>
-                <View style={styles.getButtons}><Button color='#192f6a' style={styles.Button} title="Show Date Picker" onPress={showDatePicker} /></View>
+                <View style={styles.getButtons}><Button color='#192f6a' style={styles.Button} title="Pick Date" onPress={showDatePicker} /></View>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="datetime"
@@ -136,7 +148,7 @@ const form = ({map, upload}) => {
                   onCancel={hideDatePicker}
                 />
                 <View style={styles.mapPic}>
-                    {location.lat ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: imageUrl}} /> : <Text>Not Selected on Map</Text> }
+                    {locationState.lat ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: imageUrl}} /> : <Text>Not Selected on Map</Text> }
                 </View>
                 <Picker
                     selectedValue={picker}
@@ -148,7 +160,7 @@ const form = ({map, upload}) => {
                     <Picker.Item label="Business Items" value="business items" />
                 </Picker>
                 {/* {location && <Text>{location}</Text>} */}
-                <Button onPress={uploadHandler} color='green' title='submit' />
+                <Button onPress={uploadHandler} color='lightgreen' title='submit' />
             </ScrollView>
         </View>
     );

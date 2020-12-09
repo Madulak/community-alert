@@ -5,12 +5,19 @@ import ModalDetail from '../../../components/modalDetail/modalDetail';
 import Comments from '../../../components/comments/comments';
 import { firebase } from '../../../firebase';
 
+
+import { useDispatch } from 'react-redux';
+import * as commentActions from '../../../store/actions/posts';
+
 const detail = ({route, navigation}) => {
 
     console.log(route.params.id)
     const id = route.params.id;
     const [post, setPost] = useState({})
+    const [comments, setComments] = useState([]);
     const [modal, setModal] = useState(false);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let unsubscribe;
@@ -22,6 +29,19 @@ const detail = ({route, navigation}) => {
             unsubscribe();
         }
     
+    },[])
+
+    useEffect(() => {
+        let unsubscribe;
+        unsubscribe = firebase.firestore().collection('posts').doc(id).collection('comments').orderBy('timestamp','desc').onSnapshot(snapshot => {
+            setComments(snapshot.docs.map(doc => ({
+                id: doc.id,
+                comments: doc.data()})))
+        })
+
+        return () => {
+            unsubscribe();
+        }
     },[])
 
     const goMap = () => {
@@ -36,7 +56,12 @@ const detail = ({route, navigation}) => {
         setModal(state => !state);
     }
 
-    console.log(' [POST] ',post)
+    const commentHandler = (data) => {
+        dispatch(commentActions.create_comment(data));
+    }
+
+    // console.log(' [POST] ',post)
+    console.log('[COMMENTS] +++ ',  comments)
 
     return (
         <View style={styles.container}>
@@ -44,9 +69,9 @@ const detail = ({route, navigation}) => {
                 <Image resizeMode='cover' style={styles.image} source={{uri: post.image}} />
             </View>
             
-            <Button onPress={modalHandler} title='All Details' />
-            <ModalDetail goMap={goMap} id={id} uploadedBy={post.uploadedBy} modal={modal} modalHandler={modalHandler} />
-            <Comments />
+            <Button onPress={modalHandler} color='#192f6a' title='All Details' />
+            <ModalDetail commentHandler={commentHandler} goMap={goMap} id={id} uploadedBy={post.uploadedBy} modal={modal} modalHandler={modalHandler} />
+            <Comments comments={comments} />
         </View>
     );
 }

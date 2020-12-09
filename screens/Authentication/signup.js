@@ -7,6 +7,8 @@ import Signupcomponent from '../../components/Auth/signupcomponent';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../../store/actions/auth';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const signup = ({navigation}) => {
 
     const dispatch = useDispatch();
@@ -20,7 +22,7 @@ const signup = ({navigation}) => {
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAwareScrollView style={styles.container}>
             <LinearGradient
                 // Button Linear Gradient
                 colors={['#4c669f', '#3b5998', '#192f6a']}
@@ -38,7 +40,7 @@ const signup = ({navigation}) => {
             <View style={styles.signupContainer}>
                 <Signupcomponent signup={signupHandler} login={loginRoute} />
             </View>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 

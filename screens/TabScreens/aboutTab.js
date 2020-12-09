@@ -9,7 +9,7 @@ const aboutTab = () => {
 
     return (
         <Stack.Navigator screenOptions={{headerStyle: { backgroundColor: '#192f6a',}, headerTintColor: 'white'}}>
-            <Stack.Screen name='About' component={Aboutscreen} />
+            <Stack.Screen name='Profile' component={Aboutscreen} />
         </Stack.Navigator>
     );
 }

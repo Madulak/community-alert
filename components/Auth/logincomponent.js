@@ -37,7 +37,7 @@ const logincomponent = ({signup, login}) => {
                     <ActivityIndicator size="small" color="#0000ff" />
                 </View>
             }
-            <Button title='Login' onPress={loginHandler} />
+            <Button title='Login' color='#192f6a' onPress={loginHandler} />
             <Text style={styles.text_or}>OR</Text>
             <TouchableOpacity style={styles.googleContainer} >
                 <AntDesign style={styles.googleIcon} name="google" size={34} color="blue" />
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     login__text: {
         fontSize: 20,
-        color: 'black',
+        color: '#192f6a',
         margin: 5,
         
     },
@@ -77,10 +77,12 @@ const styles = StyleSheet.create({
         zIndex: 10,
         left: 20,
         fontSize: 15,
+        color: '#192f6a',
+        fontSize: 16
     },
     input: {
-        borderWidth: 1,
-        borderColor: 'lightgrey',
+        borderWidth: 2,
+        borderColor: '#192f6a',
         borderRadius: 5,
         margin: 5,
         padding: 5,
