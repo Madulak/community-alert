@@ -5,6 +5,7 @@ import CardList from '../../../components/UI/cardList';
 import { firebase } from '../../../firebase';
 
 import { Picker } from '@react-native-picker/picker';
+import { ago } from '../../../util';
 
 const recentList = ({navigation}) => {
 
@@ -35,21 +36,21 @@ const recentList = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            
-            
                 
-            <Picker
+                <Picker
                     selectedValue={picker}
                     style={{height: 50, width: '90%', }}
                     onValueChange={(e) => setPicker(e) }>
                     <Picker.Item label="Sort" value="all" />
-                    <Picker.Item label="Car" value="car" />
-                    <Picker.Item label="Personal Items" value="personal Items" />
-                    <Picker.Item label="Business Items" value="business items" />
+                    <Picker.Item label="Missing Person/People" value="person" />
+                    <Picker.Item label="Stolen Cars" value="car" />
+                    <Picker.Item label="Burglary" value="burglary" />
+                    <Picker.Item label="Kidnapping" value="kidnapping" />
+                    <Picker.Item label="Other" value="other" />
                 </Picker>
             <FlatList showsVerticalScrollIndicator={false}  keyExtractor={item => item.id} data={posts} renderItem={(item) => (
                
-                <CardList goDetail={goDetail} title={item.item.posts.title} description={item.item.posts.description} id={item.item.id} image={item.item.posts.image} />
+                <CardList goDetail={goDetail} title={item.item.posts.title} id={item.item.id} image={item.item.posts.image} title={item.item.posts.title} place={'Johannesburg'} timestamp={ago(new Date(item.item.posts.timestamp.seconds * 1000 + item.item.posts.timestamp.nanoseconds / 1000).toUTCString())} />
             )} />
         </View>
     );

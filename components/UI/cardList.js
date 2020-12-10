@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 
-const cardList = ({image, goDetail, id}) => {
+const cardList = ({image, goDetail, id, title, timestamp, place}) => {
 
     console.log('[KEY FOR] ++ ', id)
 
@@ -10,9 +10,9 @@ const cardList = ({image, goDetail, id}) => {
             <View style={styles.imageContainer}>
                 <Image resizeMode='cover' style={styles.image} source={{uri: image}} />
             </View>
-            <Text>Hello</Text>
-            <Text>hello</Text>
-            <Text>ello</Text>
+            <Text style={styles.cardText}>{title}</Text>
+            <Text style={styles.cardText}>{timestamp}</Text>
+            <Text style={styles.cardText}>{place}</Text>
         </TouchableOpacity>
     );
 }
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         marginVertical: 10,
         width: width * 0.95,
+        padding: 5,
     },
     imageContainer: {
         height: height * 0.40,
@@ -34,6 +35,10 @@ const styles = StyleSheet.create({
         flex: 1,
         
     },
+    cardText: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    }
     
 })
 

@@ -44,7 +44,8 @@ export const create_post = (data) => {
                         timeDate: data.timeDate,
                         location: data.location,
                         picker: data.picker,
-                        uploadedBy: user
+                        uploadedBy: user,
+                        place: data.place
                     })
                     console.log('{VIDEO_UPLOAD..DONE}!!');
                 })

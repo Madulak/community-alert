@@ -7,10 +7,14 @@ import { useDispatch } from 'react-redux';
 import * as authActions from '../../../store/actions/auth';
 
 import { firebase } from '../../../firebase';
+import emailToName from 'email-to-name';
 
 const homescreen = ({navigation}) => {
 
     const dispatch = useDispatch();
+
+    const name = emailToName.process('madula.kamanga@gmail.com');
+    console.log(name.split(' ')[0]);
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false);

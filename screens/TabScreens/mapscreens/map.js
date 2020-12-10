@@ -7,7 +7,7 @@ import { firebase } from '../../../firebase';
 
 import MarkerComponent from '../../../components/markerComponent/markerComponent';
 
-const map = () => {
+const map = ({navigation}) => {
 
     const [show, setShow] = useState(false);
     const [posts, setPosts] = useState([])
@@ -34,7 +34,7 @@ const map = () => {
         }
     },[mapcoord, marker, show])
 
-    const markerSet = (lat, lng) => {
+    const markerSet = (lat, lng, id) => {
         console.log('[LAT AND LONG] ', lat, lng)
         setMapcoord({
             latitude: lat,
@@ -44,8 +44,13 @@ const map = () => {
         })
         setMarker({
             latitude: lat,
-            longitude: lng
+            longitude: lng,
+            id: id
         }) 
+    }
+
+    const goDetail = () => {
+        navigation.navigate('detail',{id: marker.id})
     }
 
     // console.log('[MAP POST] ', posts)
@@ -59,7 +64,7 @@ const map = () => {
                 
             >
                 
-                    {marker.latitude ? <Marker onPress={() => setShow(true)} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} >
+                    {marker.latitude ? <Marker onPress={goDetail} coordinate={{latitude: marker.latitude, longitude: marker.longitude}} >
                         {show && <MarkerComponent show={() => setShow(false)} />}
                     </Marker>: null } 
                 
@@ -72,7 +77,7 @@ const map = () => {
                     keyExtractor={item => item.id}
                     renderItem={(item => (
                         
-                        <TouchableOpacity  onPress={() => markerSet(item.item.posts.location.lat, item.item.posts.location.lng)} style={{width: 150, height: 150, backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 10,}}>
+                        <TouchableOpacity  onPress={() => markerSet(item.item.posts.location.lat, item.item.posts.location.lng, item.item.id)} style={{width: 150, height: 150, backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 10,}}>
                             <Text  style={styles.fontText}>{item.item.posts.picker}</Text>
                             <Image source={{uri: item.item.posts.image}} style={{width: '100%', height: '70%',}} />
                         </TouchableOpacity>

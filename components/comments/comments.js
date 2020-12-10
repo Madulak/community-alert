@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, ActivityIndicator } from 'react-native';
 
 
 import CommentCard from '../UI/commentCard';
 
-const comments = ({comments}) => {
+const comments = ({comments, loading}) => {
 
-    
+    console.log(' [LOADING] ++ ', loading)
 
     return (
         <View style={styles.container}>
@@ -16,17 +16,24 @@ const comments = ({comments}) => {
                 <Text>Comments</Text>
             </View>
 
-            <FlatList 
-                data={comments}
-                keyExtractor={item => item.id}
-                showsVerticalScrollIndicator={false}
-                renderItem={item => {
-                    return (
-                        <CommentCard comment={item.item.comments.comment} commentBy={item.item.comments.commentBy} timestamp={item.item.comments.timestamp} />
-                        
-                    )
-                }}
-            />
+            {loading === true ? 
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" />
+                </View> :
+                 <FlatList 
+                 data={comments}
+                 keyExtractor={item => item.id}
+                 showsVerticalScrollIndicator={false}
+                 renderItem={item => {
+                     return (
+                         <CommentCard comment={item.item.comments.comment} commentBy={item.item.comments.commentBy} timestamp={item.item.comments.timestamp} />
+                         
+                     )
+                 }}
+             />
+            }
+            
+           
         </View>
     );
 }
@@ -36,6 +43,11 @@ const styles = StyleSheet.create({
         flex: 1,
         
     },
+    loadingContainer: {
+        flex: 1,
+        alignItems:'center',
+        justifyContent: 'center',
+    }
     
 })
 

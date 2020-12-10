@@ -8,6 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 import Input from '../UI/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import * as locationActions from '../../store/actions/posts';
+import { color } from '../../util';
 
 const form = ({map, upload}) => {
 
@@ -21,6 +22,7 @@ const form = ({map, upload}) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState(''); 
     const [timeDate, setTimeDate] = useState(null);
+    const [place, setPlace] = useState('');
 
     const imageUrl = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${locationState.lng},${locationState.lat},14.25,0,60/600x600?access_token=pk.eyJ1IjoicGFsYXpvIiwiYSI6ImNraHJ2bTF6MTBlOXQyeGxoamJtZHY5bzIifQ.JbJRVoUD3o1YKFciSPwp2g`
 
@@ -100,7 +102,8 @@ const form = ({map, upload}) => {
         picker: picker,
         image: image,
         location: location,
-        timeDate: timeDate
+        timeDate: timeDate,
+        place: place
       }
       if (title !== '' && description !== '') {
         upload(data);
@@ -126,21 +129,26 @@ const form = ({map, upload}) => {
                         numberOfLines={3} 
                         secureTextEntry
                         maxLength={200}
-                        style={styles.input}  
+                        style={{...styles.input, height: Dimensions.get('window').height * 0.10}}  
                         value={description}
                         onChangeText={e => setDescription(e)}
                     />
+                </View>
+
+                <View style={styles.inputBorder}>
+                    <Text style={styles.Textinput}>{'Place'}</Text>
+                    <TextInput value={place} onChangeText={e => setPlace(e)} maxLength={30} style={styles.input} />
                 </View>
                 
                 <View style={styles.mapPic}>
                     {image ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: image}} /> : <Text>No Image Selected</Text> }
                 </View>
                 <View style={styles.mapButtons}>
-                    <View style={styles.getButtons}><Button color='#192f6a' onPress={getLocation} title='Current location' /></View>
-                    <View style={styles.getButtons}><Button color='#192f6a' onPress={() => map(location)} title='Get on Map' /></View>
-                    <View style={styles.getButtons}><Button color='#192f6a' onPress={pickImage} title='Pick image' /></View>
+                    <View style={styles.getButtons}><Button color={color.primary} onPress={getLocation} title='Current location' /></View>
+                    <View style={styles.getButtons}><Button color={color.primary} onPress={() => map(location)} title='Get on Map' /></View>
+                    <View style={styles.getButtons}><Button color={color.primary} onPress={pickImage} title='Pick image' /></View>
                 </View>
-                <View style={styles.getButtons}><Button color='#192f6a' style={styles.Button} title="Pick Date" onPress={showDatePicker} /></View>
+                <View style={styles.getButtons}><Button color={color.primary} style={styles.Button} title="Pick Date" onPress={showDatePicker} /></View>
                 <DateTimePickerModal
                   isVisible={isDatePickerVisible}
                   mode="datetime"
@@ -152,15 +160,16 @@ const form = ({map, upload}) => {
                 </View>
                 <Picker
                     selectedValue={picker}
-                    // style={{height: 50, width: 100}}
+                    style={{height: 50, }}
                     onValueChange={(e) => setPicker(e) }>
-                    <Picker.Item label="Person" value="person" />
-                    <Picker.Item label="Car" value="car" />
-                    <Picker.Item label="Personal Items" value="personal Items" />
-                    <Picker.Item label="Business Items" value="business items" />
+                    <Picker.Item label="Missing Person/People" value="person" />
+                    <Picker.Item label="Stolen Car" value="car" />
+                    <Picker.Item label="Burglary" value="burglary" />
+                    <Picker.Item label="Kidnapping" value="kidnapping" />
+                    <Picker.Item label="Other" value="other" />
                 </Picker>
                 {/* {location && <Text>{location}</Text>} */}
-                <Button onPress={uploadHandler} color='lightgreen' title='submit' />
+                <Button onPress={uploadHandler} color={color.primary} title='submit' />
             </ScrollView>
         </View>
     );
@@ -183,7 +192,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: '#192f6a',
+        borderColor: color.primary,
     },
     mapButtons: {
         width: '100%',
@@ -206,14 +215,17 @@ const styles = StyleSheet.create({
         zIndex: 10,
         left: 20,
         fontSize: 15,
-        color: '#192f6a'
+        color: color.primary
     },
     input: {
         borderWidth: 1,
-        borderColor: '#192f6a',
+        borderColor: color.primary,
         borderRadius: 5,
         margin: 5,
         padding: 5,
+        fontSize: 16,
+        height: height * 0.07,
+        fontWeight: 'bold',
     },
     
 })
