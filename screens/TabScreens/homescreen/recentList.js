@@ -10,21 +10,31 @@ import { ago } from '../../../util';
 const recentList = ({navigation}) => {
 
     const [posts, setPosts] = useState([]);
-    const [picker, setPicker] = useState('')
+    const [picker, setPicker] = useState('all')
 
     useEffect(() => {
         let unsubscribe;
-        unsubscribe = firebase.firestore().collection('posts').onSnapshot(snapshot => {
-            // {console.log('[DATA] ',snapshot)}
-            setPosts(snapshot.docs.map(doc => ({
-                id: doc.id,
-                posts: doc.data()})))
-               
-        })
+        if (picker === 'all') {
+            unsubscribe = firebase.firestore().collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+                // {console.log('[DATA] ',snapshot)}
+                setPosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    posts: doc.data()})))
+                   
+            })
+        } else {
+            unsubscribe = firebase.firestore().collection('posts').orderBy('timestamp', 'desc').where("picker", "==", picker).onSnapshot(snapshot => {
+                // {console.log('[DATA] ',snapshot)}
+                setPosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    posts: doc.data()})))
+                   
+            })
+        }
         return () => {
             unsubscribe ();
         }
-    },[])
+    },[picker])
 
     const goDetail = (id) => {
         navigation.navigate('detail', {
@@ -50,7 +60,7 @@ const recentList = ({navigation}) => {
                 </Picker>
             <FlatList showsVerticalScrollIndicator={false}  keyExtractor={item => item.id} data={posts} renderItem={(item) => (
                
-                <CardList goDetail={goDetail} title={item.item.posts.title} id={item.item.id} image={item.item.posts.image} title={item.item.posts.title} place={'Johannesburg'} timestamp={ago(new Date(item.item.posts.timestamp.seconds * 1000 + item.item.posts.timestamp.nanoseconds / 1000).toUTCString())} />
+                <CardList goDetail={goDetail} title={item.item.posts.title} id={item.item.id} image={item.item.posts.image} title={item.item.posts.title} place={'Johannesburg'} timestamp={ago(new Date(item.item.posts.timestamp?.seconds * 1000 + item.item.posts.timestamp?.nanoseconds / 1000).toUTCString())} />
             )} />
         </View>
     );

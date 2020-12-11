@@ -1,7 +1,7 @@
 import { LOADING, LOGIN, LOGOUT, SIGNUP } from "../actions/auth";
 
 const initialState = {
-    user: {username: 'palazo'},
+    user: null,
     allowed: false,
     isSignup: false,
     loading: false
@@ -18,7 +18,7 @@ const Reducer = (state = initialState, action) => {
         case LOGIN:
             return {
                 ...state,
-                user: action.email,
+                user: {username: action.email},
             }
         case SIGNUP:
             return {

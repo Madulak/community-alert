@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, ActivityIndicator } from 'react-native';
 
+import { useSelector } from 'react-redux';
 
 import CommentCard from '../UI/commentCard';
 
 const comments = ({comments, loading}) => {
 
-    console.log(' [LOADING] ++ ', loading)
+    
+    const loadingState = useSelector(state => state.posts.loading);
+    console.log(' [LOADING] ++ ', loadingState);
 
     return (
         <View style={styles.container}>
@@ -16,9 +19,9 @@ const comments = ({comments, loading}) => {
                 <Text>Comments</Text>
             </View>
 
-            {loading === true ? 
+            {loadingState === true ? 
                 <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size="large" color="black" />
                 </View> :
                  <FlatList 
                  data={comments}

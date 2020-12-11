@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Platform, Keyboard, Dimensions, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, Platform, Keyboard, Dimensions, Image, ScrollView, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -10,10 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as locationActions from '../../store/actions/posts';
 import { color } from '../../util';
 
-const form = ({map, upload}) => {
+const form = ({map, upload, modalHandler}) => {
 
     const dispatch = useDispatch();
     const locationState = useSelector(state => state.posts.location);
+    // const loading = useSelector(state => state.posts.loading);
 
     const [image, setImage] = useState(null);
     const [location, setLocation] = useState({});
@@ -86,12 +87,13 @@ const form = ({map, upload}) => {
       hideDatePicker();
     };
 
-    // console.log(title);
-    // console.log(description);
-    // console.log(picker);
-    // console.log(timeDate);
-    // console.log(image)
-    // console.log(location);
+    console.log( ' [Title] ',title);
+    console.log( ' [DESCRIPTION] ', description);
+    console.log( ' [PICKER] ', picker);
+    console.log( ' [TIMEDATE] ', timeDate);
+    console.log( ' [IMAGE ] ', image)
+    console.log(locationState);
+    console.log(' [PLACE] ', place)
 
     console.log('[LOCATION FROM THE STATE] ', locationState)
 
@@ -101,7 +103,7 @@ const form = ({map, upload}) => {
         description: description,
         picker: picker,
         image: image,
-        location: location,
+        location: locationState,
         timeDate: timeDate,
         place: place
       }
@@ -109,6 +111,10 @@ const form = ({map, upload}) => {
         upload(data);
         setTitle('');
         setDescription('');
+        setPlace('');
+        dispatch(locationActions.select_location({}));
+        setImage(null);
+        modalHandler()
       }
     }
 
@@ -159,8 +165,9 @@ const form = ({map, upload}) => {
                     {locationState.lat ? <Image resizeMode='cover' style={styles.imagePic} source={{ uri: imageUrl}} /> : <Text>Not Selected on Map</Text> }
                 </View>
                 <Picker
+                    itemStyle={{backgroundColor: 'blue'}}
                     selectedValue={picker}
-                    style={{height: 50, }}
+                    style={{height: 50,  marginVertical: 10,}}
                     onValueChange={(e) => setPicker(e) }>
                     <Picker.Item label="Missing Person/People" value="person" />
                     <Picker.Item label="Stolen Car" value="car" />
@@ -169,6 +176,11 @@ const form = ({map, upload}) => {
                     <Picker.Item label="Other" value="other" />
                 </Picker>
                 {/* {location && <Text>{location}</Text>} */}
+                {/* {loading === true && 
+                    <View>
+                        <ActivityIndicator size="small" color="#0000ff" />
+                    </View>
+                } */}
                 <Button onPress={uploadHandler} color={color.primary} title='submit' />
             </ScrollView>
         </View>

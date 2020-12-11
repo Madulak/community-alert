@@ -9,12 +9,13 @@ import * as authActions from '../../../store/actions/auth';
 import { firebase } from '../../../firebase';
 import emailToName from 'email-to-name';
 
-const homescreen = ({navigation}) => {
 
+
+const homescreen = ({navigation}) => {
+    
     const dispatch = useDispatch();
 
-    const name = emailToName.process('madula.kamanga@gmail.com');
-    console.log(name.split(' ')[0]);
+    
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const homescreen = ({navigation}) => {
     useEffect(() => {
         setLoading(true)
         let unsubscribe;
-        unsubscribe = firebase.firestore().collection('posts').onSnapshot(snapshot => {
+        unsubscribe = firebase.firestore().collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
             // {console.log('[DATA] ',snapshot)}
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -44,7 +45,7 @@ const homescreen = ({navigation}) => {
     const goMore = () => {
         navigation.navigate('Stolen Items')
     }
-    // console.log('[LOADING] ',loading);
+    console.log('[POSTS] ',posts);
     
     // {posts && console.log(' [Timestamps] ',posts);}
 

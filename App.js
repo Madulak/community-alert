@@ -17,6 +17,8 @@ const root = combineReducers({
 const store = createStore(root, applyMiddleware(ReduxThunk));
 
 const App = () => {
+
+  console.disableYellowBox = true;
   
   return (
     <Provider store={store}>

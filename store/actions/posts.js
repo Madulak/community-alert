@@ -3,21 +3,22 @@ import { firebase } from '../../firebase';
 export const CREATE_POST = 'CREATE_POST';
 export const SELECT_LOCATION = 'SELECT_LOCATION';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const LOADING = 'LOADING';
 
 export const create_post = (data) => {
 
     return async (dispatch, getState) => {
         const user = getState().user.user;
-        console.log('[USER] ',user);
-        console.log('[DATA] ' , data)
+        // console.log('[USER] ',user);
+        // console.log('[DATA] ' , data)
 
         const image = data.image;
         const imageName = data.image.split('/').pop();
-        console.log('[IMAGE_NAME] ', imageName);
+        // console.log('[IMAGE_NAME] ', imageName);
 
         const response = await fetch(image);
         const blob = await response.blob()
-        console.log('[BLOB] ',blob)
+        // console.log('[BLOB] ',blob)
 
         const uploadTask2 = firebase.storage().ref(`images/${imageName}`).put(blob);
 
@@ -25,7 +26,7 @@ export const create_post = (data) => {
             (snapshot) => {
                 const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100 )
                 console.log(progress);
-                // dispatch({ type: PROGRESS, progress: progress})
+                // dispatch({ type: Loading, progress: true})
             },
             (error) => {
                 console.log(error);
@@ -48,9 +49,10 @@ export const create_post = (data) => {
                         place: data.place
                     })
                     console.log('{VIDEO_UPLOAD..DONE}!!');
+                    // dispatch({ type: Loading, progress: false})
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.log(' [ ERROR ] ',error);
                 })
             })
 
@@ -81,5 +83,13 @@ export const create_comment = (data) => {
         })
 
         dispatch({ type: CREATE_COMMENT })
+    }
+}
+
+export const loading = (loading) => {
+    
+    return dispatch => {
+
+        dispatch({type: 'LOADING', loading: loading})
     }
 }

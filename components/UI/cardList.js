@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 
+import { color } from '../../util';
+
 const cardList = ({image, goDetail, id, title, timestamp, place}) => {
 
     console.log('[KEY FOR] ++ ', id)
@@ -21,7 +23,7 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'lightblue',
+        backgroundColor: color.secondary,
         marginVertical: 10,
         width: width * 0.95,
         padding: 5,

@@ -49,14 +49,14 @@ const modalDetail = ({modal, modalHandler, id, title, description, picker, uploa
                 </View>
                 <View>
                     <Text style={styles.title}>Title: <Text style={styles.textInside}>{post.title}</Text></Text>
-                    <Text style={styles.title}>Description: <Text style={styles.textInside}>{post.description} In incididunt ea mollit occaecat est cupidatat consectetur sunt.</Text></Text>
+                    <Text style={styles.title}>Description: <Text style={styles.textInside}>{post.description} </Text></Text>
                     <Text style={styles.title}>category: <Text style={styles.textInside}>{post.picker}</Text></Text>
                     
                 </View>
                 <View style={styles.commentContainer}>
                     <View style={styles.inputBorder}>
                         <Text style={styles.Textinput}>{'Comment'}</Text>
-                        <TextInput value={comment} onChangeText={e => setComment(e)} maxLength={30} style={styles.input} />
+                        <TextInput value={comment} onChangeText={e => setComment(e)} maxLength={120} style={styles.input} />
                     </View>
                     <View>
                         <Button onPress={addComment} title='Send' />
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     commentContainer: {
         flexDirection: 'row',
         justifyContent:'space-between',
-        alignItems: 'flex-end',
+        alignItems: 'center',
     }
 
 })

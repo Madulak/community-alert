@@ -1,7 +1,8 @@
-import { SELECT_LOCATION } from "../actions/posts";
+import { LOADING, SELECT_LOCATION } from "../actions/posts";
 
 const initialState = {
-    location: {}
+    location: {},
+    loading: false
 }
 
 const reducer = ( state = initialState, action) => {
@@ -11,6 +12,11 @@ const reducer = ( state = initialState, action) => {
             return {
                 ...state,
                 location: action.location,
+            }
+        case LOADING:
+            return {
+                ...state,
+                loading: action.loading
             }
 
         default: 

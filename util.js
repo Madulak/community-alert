@@ -2,7 +2,7 @@ import date from 'date-and-time';
 
 export const ago = (dates) => {
         
-    if (Math.round(date.subtract(new Date(), new Date(dates)).toSeconds()) > 0 && Math.round(date.subtract(new Date(), new Date(dates)).toSeconds()) < 120)  {
+    if (Math.round(date.subtract(new Date(), new Date(dates)).toSeconds()) > 0 && Math.round(date.subtract(new Date(), new Date(dates)).toSeconds()) < 60)  {
         return 'Moment ago'
     } else if  (Math.round(date.subtract(new Date(), new Date(dates)).toMinutes()) > 0 && Math.round(date.subtract(new Date(), new Date(dates)).toMinutes()) < 60 ) {
         return Math.round(date.subtract(new Date(), new Date(dates)).toMinutes()) + ' Minutes Ago'
@@ -12,13 +12,15 @@ export const ago = (dates) => {
         return Math.round(date.subtract(new Date(), new Date(dates)).toDays()) + ' Days Ago'
     }
     
-    return Math.round(date.subtract(new Date(), new Date(dates)).toDays()) + ' Days Ago'
+    return  'Moment ago'
     // Math.round(date.subtract(new Date(), new Date(ig.createdAt)).toDays())
 }
 
 export const color = {
     primary: '#192f6a',
-    secondary: 'lightblue',
+    secondary: '#33a8ff',
+    red: '#f86363',
+    green: '#33ff55'
 }
 
 export const category = [

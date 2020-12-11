@@ -9,6 +9,8 @@ import { firebase } from '../../../firebase';
 import { useDispatch } from 'react-redux';
 import * as commentActions from '../../../store/actions/posts';
 
+import { color } from '../../../util';
+
 const detail = ({route, navigation}) => {
 
     console.log(route.params.id)
@@ -21,13 +23,13 @@ const detail = ({route, navigation}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
+        dispatch(commentActions.loading(true))
         let unsubscribe;
         unsubscribe = firebase.firestore().collection('posts').doc(id).onSnapshot(snapshot => {
             setPost(snapshot.data())
         })
         
-
+        dispatch(commentActions.loading(false));
         return () => {
             unsubscribe();
         }
@@ -74,7 +76,7 @@ const detail = ({route, navigation}) => {
                 <Image resizeMode='cover' style={styles.image} source={{uri: post.image}} />
             </View>
             
-            <Button onPress={modalHandler} color='#192f6a' title='All Details' />
+            <Button onPress={modalHandler} color={color.primary} title='All Details' />
             <ModalDetail commentHandler={commentHandler} goMap={goMap} id={id} uploadedBy={post.uploadedBy} modal={modal} modalHandler={modalHandler} />
             <Comments loading={loading} comments={comments} />
         </View>

@@ -32,8 +32,8 @@ const mapscreen = ({route}) => {
 
     return (
         <View style={styles.container}>
-            <MapView region={locationState.lat && {latitude: locationState.lat, longitude: locationState.lng, latitudeDelta: 0.0922, longitudeDelta: 0.0421}} onPress={getCoordinates} style={styles.mapStyle} > 
-                {locationState.lat && <Marker title='picked location' coordinate={{longitude: locationState.lng, latitude: locationState.lat}} />}
+            <MapView region={locationState.lat ? {latitude: locationState.lat, longitude: locationState.lng, latitudeDelta: 0.0922, longitudeDelta: 0.0421}: {latitude:  -26.205379217137875, longitude: 28.046106845140457, latitudeDelta: 0.0922, longitudeDelta: 0.0421}} onPress={getCoordinates} style={styles.mapStyle} > 
+                {locationState.lat && <Marker coordinate={{longitude: locationState.lng, latitude: locationState.lat}} />}
             </MapView>
         </View>
     );

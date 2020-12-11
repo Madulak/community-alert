@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
+import { color } from '../../util';
+
 const recentCard = ({ image, title, timestamp, place, detail }) => {
 
     return (
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         padding: 10,
-        backgroundColor: 'lightblue'
+        backgroundColor: color.secondary
     },
     imageContainer: {
         width: 200,

@@ -6,14 +6,18 @@ import { FlatList } from 'react-native-gesture-handler';
 import { firebase } from '../../../firebase';
 
 import MarkerComponent from '../../../components/markerComponent/markerComponent';
+import { Picker } from '@react-native-picker/picker';
+
+import { color } from '../../../util';
 
 const map = ({navigation}) => {
 
+    const [picker, setPicker] = useState('all');
     const [show, setShow] = useState(false);
     const [posts, setPosts] = useState([])
     const [mapcoord, setMapcoord] = useState({
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: -26.20532657442884,
+        longitude: 28.043733425438404,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       })
@@ -22,17 +26,28 @@ const map = ({navigation}) => {
 
     useEffect(() => {
         let unsubscribe;
-        unsubscribe = firebase.firestore().collection('posts').onSnapshot(snapshot => {
-            // {console.log('[DATA] ',snapshot)}
-            setPosts(snapshot.docs.map(doc => ({
-                id: doc.id,
-                posts: doc.data()})))
-               
-        })
+        if (picker === 'all') {
+            unsubscribe = firebase.firestore().collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+                // {console.log('[DATA] ',snapshot)}
+                setPosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    posts: doc.data()})))
+                    
+                   
+            })
+        } else {
+            unsubscribe = firebase.firestore().collection('posts').orderBy('timestamp', 'desc').where("picker", "==", picker).onSnapshot(snapshot => {
+                // {console.log('[DATA] ',snapshot)}
+                setPosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    posts: doc.data()})))
+                   
+            })
+        }
         return () => {
             unsubscribe ();
         }
-    },[mapcoord, marker, show])
+    },[mapcoord, marker, show, picker])
 
     const markerSet = (lat, lng, id) => {
         console.log('[LAT AND LONG] ', lat, lng)
@@ -45,7 +60,8 @@ const map = ({navigation}) => {
         setMarker({
             latitude: lat,
             longitude: lng,
-            id: id
+            id: id,
+            color: 'lightgreen'
         }) 
     }
 
@@ -77,39 +93,69 @@ const map = ({navigation}) => {
                     keyExtractor={item => item.id}
                     renderItem={(item => (
                         
-                        <TouchableOpacity  onPress={() => markerSet(item.item.posts.location.lat, item.item.posts.location.lng, item.item.id)} style={{width: 150, height: 150, backgroundColor: 'lightblue', margin: 5, padding: 10, borderRadius: 10,}}>
+                        <TouchableOpacity  onPress={() => markerSet(item.item.posts.location.lat, item.item.posts.location.lng, item.item.id)} style={{...styles.cardContainer, backgroundColor: item.item.id === marker.id ? color.red : color.secondary}}>
                             <Text  style={styles.fontText}>{item.item.posts.picker}</Text>
                             <Image source={{uri: item.item.posts.image}} style={{width: '100%', height: '70%',}} />
                         </TouchableOpacity>
                     ))}
                 />
             </View>
+
+            <View style={styles.pickerContainer}>
+                <Picker
+                    selectedValue={picker}
+                    style={{height: 50, width: '90%', }}
+                    onValueChange={(e) => setPicker(e) }>
+                    <Picker.Item label="Recent" value="all" />
+                    <Picker.Item label="Missing Person/People" value="person" />
+                    <Picker.Item label="Stolen Cars" value="car" />
+                    <Picker.Item label="Burglary" value="burglary" />
+                    <Picker.Item label="Kidnapping" value="kidnapping" />
+                    <Picker.Item label="Other" value="other" />
+                </Picker>
+            </View>
         </View>
     );
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        
     },
     mapStyle: {
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
+        width: width,
+        height: height,
     },
     flatlistContainer: {
         position:'absolute',
-        bottom: Dimensions.get('window').height * 0.01,
+        bottom: height * 0.01,
         // height: Dimensions.get('screen').height * 0.25,
-        width: Dimensions.get('window').width,
+        width: width,
         backgroundColor: 'white',
         zIndex: 10,
         backgroundColor: 'transparent',
     },
     fontText: {
-        fontSize: 15,
+        fontSize: 18,
         padding: 5,
-        
+        fontWeight: 'bold'
+    },
+    pickerContainer: {
+        position: 'absolute',
+        top: height * 0.03,
+        backgroundColor: 'white',
+        zIndex: 10,
+        right: width * 0.01,
+        width: width * 0.5,
+    },
+    cardContainer : {
+        width: 150,
+        height: 150, 
+        margin: 5, 
+        padding: 10, 
+        borderRadius: 10,
     }
 })
 
