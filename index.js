@@ -24,8 +24,8 @@ const index = () => {
     const Stack = createStackNavigator();
     const Tab = createBottomTabNavigator();
 
-    const state = useSelector(state => state.user.user);
-    console.log(state);
+    const isAuth = useSelector(state => state.user.user);
+    console.log(isAuth);
 
     useEffect(() => {
 
@@ -93,7 +93,7 @@ const index = () => {
 
         return (
             <Fragment>
-                {state !== null ? <FullApp />: <Auth />}
+                {isAuth !== null ? <FullApp />: <Auth />}
             </Fragment>
         );
 }
