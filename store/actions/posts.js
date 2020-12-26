@@ -4,6 +4,8 @@ export const CREATE_POST = 'CREATE_POST';
 export const SELECT_LOCATION = 'SELECT_LOCATION';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const LOADING = 'LOADING';
+export const UPLOADED_POST = 'UPLOADED_POST';
+export const ADD_TO_FOUND = 'ADD_TO_FOUND';
 
 export const create_post = (data) => {
 
@@ -93,3 +95,22 @@ export const loading = (loading) => {
         dispatch({type: 'LOADING', loading: loading})
     }
 }
+
+export const uploaded_post = (posts) => {
+
+    return dispatch => {
+
+        dispatch({ type: UPLOADED_POST, uploadedPost: posts})
+    }
+}
+
+export const add_to_found = (post) => {
+
+    return async (dispatch, getState) => {
+        const user = getState().user.user.username;
+        firebase.firestore().collection('found').add(post).catch(error => console.log(error));
+        firebase.firestore().collection('posts').doc(post.id).delete().then(() => console.log('Deleted!!!')).catch(e => console.log(e));
+        dispatch({type: ADD_TO_FOUND})
+    }
+}
+

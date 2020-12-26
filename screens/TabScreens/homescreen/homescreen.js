@@ -17,7 +17,8 @@ const homescreen = ({navigation}) => {
 
     
 
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState([]);
+    const [found, setFound] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -36,6 +37,25 @@ const homescreen = ({navigation}) => {
         }
     },[loading])
 
+    useEffect(() => {
+        setLoading(true)
+        let unsubscribe = firebase.firestore().collection('found').onSnapshot(snapshot => {
+            // console.log('[DATA] ',snapshot)
+            setFound(snapshot.docs.map(doc => {
+                console.log('DATA{{}}',doc.data())
+                return ({
+                id: doc.id,
+                posts: doc.data()
+                })})
+            )
+
+               
+        })
+        return () => {
+            unsubscribe ();
+        }
+    },[])
+
     const goDetail = (id) => {
         navigation.navigate('detail', {
             id: id
@@ -45,7 +65,7 @@ const homescreen = ({navigation}) => {
     const goMore = () => {
         navigation.navigate('Stolen Items')
     }
-    console.log('[POSTS] ',posts);
+    console.log('[Found] ',found);
     
     // {posts && console.log(' [Timestamps] ',posts);}
 
@@ -63,14 +83,18 @@ const homescreen = ({navigation}) => {
                 <RecentFlatlist recentData={posts} detail={goDetail}  />
 
                 {/* <View style={styles.recentContainer}>
-                    <Text style={styles.recentText}>Categories</Text>
+                    <Text style={styles.recentText}>Found</Text>
                     <TouchableOpacity>
                         <Text style={styles.moreText}>More</Text>
                     </TouchableOpacity>
                 </View>
-                <RecentFlatlist detail={() => navigation.navigate('detail')} />
+                <RecentFlatlist recentData={found} detail={goDetail} /> */}
 
-                <Button color='red' title='log out' onPress={logoutHandler} /> */}
+                {found && found.map(el => (
+                    <View>
+                        <Text>{el.posts.posts.title}</Text>
+                    </View>
+                ))}
                 
             </ScrollView>
         </View>

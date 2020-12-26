@@ -4,7 +4,7 @@ import Avatar from 'react-native-user-avatar';
 
 import { color } from '../../util';
 
-const profileHeader = ({user,uploaded}) => {
+const profileHeader = ({user,uploaded, goUploaded}) => {
 
     return (
         <View style={styles.container}>
@@ -15,7 +15,7 @@ const profileHeader = ({user,uploaded}) => {
                 <Text style={styles.profileText}>{user}</Text>
             </View>
             <View style={styles.statsContainer}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={goUploaded} style={styles.button}>
                     <Text style={{...styles.uploadedText, color: 'red'}}>Uploaded</Text>
                     <Text style={{...styles.numbers, color: 'red'}}>{uploaded}</Text>
                 </TouchableOpacity>

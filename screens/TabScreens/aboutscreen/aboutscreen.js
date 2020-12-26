@@ -7,11 +7,15 @@ import { firebase } from '../../../firebase';
 import { useSelector } from 'react-redux';
 import emailToName from 'email-to-name';
 
-const aboutscreen = () => {
+import { useDispatch,  } from 'react-redux';
+import * as postsActions from '../../../store/actions/posts';
+
+const aboutscreen = ({navigation}) => {
 
     const username = useSelector(state => state.user.user.username);
     const [posts, setPosts] = useState([])
     const user = emailToName.process(username);
+    const dispatch = useDispatch()
     console.log(' [USER] ', username);
 
     useEffect(() => {
@@ -23,16 +27,26 @@ const aboutscreen = () => {
                 posts: doc.data()})))
                
         })
+
+
+        
         return () => {
             unsubscribe ();
         }
     }, [])
 
     console.log('[POST LENGTH] ', posts);
+    if (posts.length > 0) {
+        dispatch(postsActions.uploaded_post(posts));
+    }
+
+    const goUploaded = () => {
+        navigation.navigate('Uploaded List');
+    }
 
     return (
         <View style={styles.container}>
-            <ProfileHeader uploaded={posts.length} user={user} />
+            <ProfileHeader goUploaded={goUploaded} uploaded={posts.length} user={user} />
 
         </View>
     );
@@ -43,6 +57,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
+
     }
 })
 

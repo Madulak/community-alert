@@ -1,10 +1,11 @@
-import { LOADING, LOGIN, LOGOUT, SIGNUP } from "../actions/auth";
+import { LOADING, LOGIN, LOGOUT, SIGNUP, ERROR } from "../actions/auth";
 
 const initialState = {
     user: null,
     allowed: false,
     isSignup: false,
-    loading: false
+    loading: false,
+    error: null
 }
 
 const Reducer = (state = initialState, action) => {
@@ -29,6 +30,11 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: action.loading,
+            }
+        case ERROR:
+            return {
+                ...state,
+                error: action.error,
             }
 
         default:

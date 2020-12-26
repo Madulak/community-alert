@@ -11,6 +11,7 @@ const logincomponent = ({signup, login}) => {
     const [password, setPassword] = useState('');
     
     const loading = useSelector(state => state.user.loading);
+    const error = useSelector(state => state.user.error);
 
     const loginHandler = () => {
         if(email !== '' && password !== '') {
@@ -37,6 +38,7 @@ const logincomponent = ({signup, login}) => {
                     <ActivityIndicator size="small" color="#0000ff" />
                 </View>
             }
+            {error && <Text style={styles.errorText}>{error}</Text>}
             <Button title='Login' color='#192f6a' onPress={loginHandler} />
             <Text style={styles.text_or}>OR</Text>
             <TouchableOpacity style={styles.googleContainer} >
@@ -125,6 +127,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         marginVertical: 10,
+    },
+    errorText: {
+        color: 'red',
+        
     }
 })
 

@@ -5,6 +5,8 @@ import { color } from '../../util';
 
 const recentCard = ({ image, title, timestamp, place, detail }) => {
 
+    console.log(' [ the ] ', title, timestamp, place, detail)
+
     return (
         <TouchableOpacity onPress={detail} style={styles.cardContainer}>
             <View style={styles.imageContainer}>

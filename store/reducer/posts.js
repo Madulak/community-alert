@@ -1,8 +1,9 @@
-import { LOADING, SELECT_LOCATION } from "../actions/posts";
+import { LOADING, SELECT_LOCATION, UPLOADED_POST } from "../actions/posts";
 
 const initialState = {
     location: {},
-    loading: false
+    loading: false,
+    uploadedPost: []
 }
 
 const reducer = ( state = initialState, action) => {
@@ -17,6 +18,11 @@ const reducer = ( state = initialState, action) => {
             return {
                 ...state,
                 loading: action.loading
+            }
+        case UPLOADED_POST:
+            return {
+                ...state,
+                uploadedPost: action.uploadedPost
             }
 
         default: 

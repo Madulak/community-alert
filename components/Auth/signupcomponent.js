@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
+import { useSelector } from 'react-redux';
 
 const signupcomponent = ({login, signup}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const loading = useSelector(state => state.user.loading);
+    const error = useSelector(state => state.user.error);
 
     const signupHandler = () => {
         if (email !== '' && password !== '') {
@@ -33,6 +37,14 @@ const signupcomponent = ({login, signup}) => {
                 <Text style={styles.Textinput}>Re-type Password</Text>
                 <TextInput style={styles.input}  />
             </View>
+
+            {loading === true && 
+                <View>
+                    <ActivityIndicator size="small" color="#0000ff" />
+                </View>
+            }
+            {error && <Text style={styles.errorText}>{error}</Text>}
+
             <Button onPress={signupHandler} color='#192f6a' title='Sign up' />
             <Text style={styles.text_or}>OR</Text>
             <TouchableOpacity style={styles.googleContainer} >

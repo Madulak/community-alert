@@ -54,7 +54,7 @@ const index = () => {
                       activeBackgroundColor: '#192f6a',
                       inactiveBackgroundColor: 'white',
                           style: {
-                                backgroundColor: 'red',
+                                backgroundColor: 'white',
                                 
                           }
                    }}
